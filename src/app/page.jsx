@@ -7,7 +7,7 @@ import CurrentlyLearning from "@/components/sections/CurrentlyLearning";
 import Projects from "@/components/sections/Projects";
 import EducationTimeline from "@/components/sections/EducationTimeline";
 import Certifications from "@/components/sections/Certifications";
-import Stats from "@/components/sections/Stats";
+import Hobbies from "@/components/sections/Hobbies";
 
 // Contact pulls in @emailjs/browser, which the rest of the (above-the-fold-
 // heavy) page doesn't need — split it into its own chunk. SSR stays on
@@ -34,7 +34,7 @@ export default function Home() {
         <Projects />
         <EducationTimeline />
         <Certifications />
-        <Stats />
+        <Hobbies />
         <Contact />
       </main>
     </PageTransition>
