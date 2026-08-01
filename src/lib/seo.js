@@ -1,10 +1,11 @@
 // Central SEO constants.
 //
-// SITE_URL is a PLACEHOLDER — it feeds metadataBase, Open Graph/Twitter
-// `url`, the JSON-LD Person schema, robots.js, and sitemap.js. Replace it
-// with the real deployed domain before shipping; until then, OG/Twitter
-// previews and the sitemap will point at a non-resolving example domain.
-export const SITE_URL = "https://suraj-gupta-portfolio.example.com";
+// SITE_URL feeds metadataBase, Open Graph/Twitter `url`, the JSON-LD Person
+// schema, robots.js, and sitemap.js. Deployed on Vercel — this is the
+// stable production domain (not the per-deployment URL with the random
+// hash, which changes on every push). Update this again if a custom domain
+// is attached later.
+export const SITE_URL = "https://suraj-portfolio-swart.vercel.app";
 
 // Written for a search snippet, not copy-pasted from About — kept under
 // 160 characters.
