@@ -37,9 +37,14 @@ export default function Skills() {
       <div className="mx-auto max-w-5xl">
         <SectionHeading id="skills-heading" eyebrow="What I Work With" title="Skills" />
 
+        {/* Still a 2-column grid, generalized from exactly 2 tracks to N
+            categories: left-column entries (even index) slide in from the
+            left, right-column entries (odd index) from the right — the same
+            alternating two-track reveal, just no longer hardcoded to a
+            single pair. */}
         <div className="grid gap-12 md:grid-cols-2 md:gap-16">
           {skillTracks.map((track, i) => (
-            <SkillTrack key={track.id} track={track} direction={i === 0 ? -1 : 1} />
+            <SkillTrack key={track.id} track={track} direction={i % 2 === 0 ? -1 : 1} />
           ))}
         </div>
       </div>

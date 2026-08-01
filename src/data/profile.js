@@ -5,11 +5,17 @@ export const profile = {
   initials: "SG",
   title: "AI Engineer & Full-Stack Developer",
   status: "Fresher · Open to Work",
+  // Hero's headline (a mission statement) is distinct from `title` — `title`
+  // still powers the Navbar/Footer/metadata's shorter "AI Engineer &
+  // Full-Stack Developer" label, this is just the big Hero-only line.
+  heroHeadline:
+    "Building AI-powered and scalable software that solves real-world problems through intelligent systems and modern engineering.",
   tagline: "I build systems that ship — not notebooks.",
+  roles: ["AI Engineer", "Full Stack Developer", "Machine Learning Enthusiast"],
   about: [
-    "I'm an AI Engineer and Full-Stack Developer with a strong foundation in Computer Science and advanced training through CDAC ACTS' Post Graduate Certification Program in Artificial Intelligence (PGCP-AI).",
-    "I enjoy building intelligent, scalable, and user-focused applications that solve real-world problems. My interests include Machine Learning, Deep Learning, Natural Language Processing, Computer Vision, and Retrieval-Augmented Generation (RAG), along with developing modern full-stack applications.",
-    "I value clean architecture, continuous learning, and writing maintainable code. I'm eager to contribute to innovative teams, take on challenging problems, and build technology that creates meaningful impact.",
+    "I'm drawn to problems where intelligence meets engineering — where a model's output has to survive contact with real users, real data, and real edge cases. That's the gap I like working in: turning a research idea into something that actually ships.",
+    "I care about clean architecture as much as clever algorithms, because a system nobody can maintain doesn't solve anything for long.",
+    "Right now I'm deepening that focus through CDAC ACTS' PGCP-AI program, and I'm looking for a team where I can keep building things that hold up outside a notebook.",
   ],
   credentials: [
     { label: "B.Tech CSE", detail: "2024" },
