@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import PageTransition from "@/components/layout/PageTransition";
 import Hero from "@/components/sections/Hero";
+import NetworkDivider from "@/components/sections/NetworkDivider";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
 import CurrentlyLearning from "@/components/sections/CurrentlyLearning";
@@ -28,6 +29,7 @@ export default function Home() {
           reintroduce the position:fixed containing-block bug from Module 5. */}
       <main className="relative overflow-x-hidden">
         <Hero />
+        <NetworkDivider />
         <About />
         <Skills />
         <CurrentlyLearning />
