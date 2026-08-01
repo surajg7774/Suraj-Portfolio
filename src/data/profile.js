@@ -13,7 +13,7 @@ export const profile = {
   ],
   credentials: [
     { label: "B.Tech CSE", detail: "2024" },
-    { label: "PG-DAI", detail: "CDAC ACTS · Feb '26" },
+    { label: "PG-DAC", detail: "CDAC ACTS · 2025" },
   ],
   location: "Khargone, Madhya Pradesh, India",
   email: "surajg7774@gmail.com",

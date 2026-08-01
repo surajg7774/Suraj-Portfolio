@@ -21,10 +21,17 @@ export const educationTimeline = [
     year: "2024",
   },
   {
-    id: "pgdai",
-    level: "PG-DAI (PG Diploma in Advanced Computing)",
+    id: "pgdac",
+    level: "PG-DAC (PG Diploma in Advanced Computing)",
     institute: "CDAC ACTS, Pune",
     board: null,
-    year: "2026 (in progress)",
+    year: "2025",
+  },
+  {
+    id: "pgcpai",
+    level: "PGCP-AI (Post Graduate Certification Program in Artificial Intelligence)",
+    institute: "CDAC ACTS, Pune",
+    board: null,
+    year: "2026",
   },
 ];

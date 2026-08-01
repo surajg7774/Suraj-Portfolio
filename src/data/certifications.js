@@ -1,5 +1,5 @@
-// PG-DAC/PG-DAI is a diploma, not a certification — it lives in
-// data/education.js only. Certifications lists PGCP-AI exclusively.
+// PG-DAC is a diploma, not a certification — it lives in data/education.js
+// only. Certifications lists PGCP-AI exclusively.
 export const certifications = [
   {
     id: "pgcp-ai-cert",
