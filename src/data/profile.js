@@ -7,9 +7,9 @@ export const profile = {
   status: "Fresher · Open to Work",
   tagline: "I build systems that ship — not notebooks.",
   about: [
-    "I'm an AI Engineer and full-stack developer based in Khargone, India — B.Tech in Computer Science, now deepening the applied-AI side through CDAC's PG-Diploma in Advanced Computing. I build things that run in production, not notebooks that stop at a demo.",
-    "On the backend, I work in Spring Boot and React — real auth, real data models, real edge cases, not scaffolding. On the AI side, I build RAG pipelines, NLP systems, and computer vision models that have to hold up outside a curated dataset.",
-    "I'm a fresher on paper, not in output — every project here is something I built end-to-end and can defend line by line. Open to work, ready to start now.",
+    "I'm an AI Engineer and Full-Stack Developer with a strong foundation in Computer Science and advanced training through CDAC ACTS' Post Graduate Certification Program in Artificial Intelligence (PGCP-AI).",
+    "I enjoy building intelligent, scalable, and user-focused applications that solve real-world problems. My interests include Machine Learning, Deep Learning, Natural Language Processing, Computer Vision, and Retrieval-Augmented Generation (RAG), along with developing modern full-stack applications.",
+    "I value clean architecture, continuous learning, and writing maintainable code. I'm eager to contribute to innovative teams, take on challenging problems, and build technology that creates meaningful impact.",
   ],
   credentials: [
     { label: "B.Tech CSE", detail: "2024" },
