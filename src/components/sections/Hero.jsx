@@ -9,7 +9,8 @@ import NodeGraphBackground from "@/components/effects/NodeGraphBackground";
 import { profile } from "@/data/profile";
 import { TIMING } from "@/lib/constants";
 
-const headlineWords = profile.heroHeadline.split(" ");
+const nameWords = profile.name.split(" ");
+const titleWords = profile.title.split(" ");
 
 function WordLine({ words, className = "" }) {
   return (
@@ -49,7 +50,6 @@ function ScrollIndicator({ reducedMotion }) {
 export default function Hero() {
   const headlineRef = useRef(null);
   const taglineRef = useRef(null);
-  const roleRef = useRef(null);
   const reducedMotion = useReducedMotion();
   const primaryCtaRef = useMagneticButton();
   const secondaryCtaRef = useMagneticButton();
@@ -58,67 +58,32 @@ export default function Hero() {
   useEffect(() => {
     const words = headlineRef.current?.querySelectorAll("[data-word]");
     const tagline = taglineRef.current;
-    const roleEl = roleRef.current;
-    if (!words || !tagline || !roleEl) return undefined;
+    if (!words || !tagline) return undefined;
 
     if (reducedMotion) {
       gsap.set(words, { opacity: 1, y: 0 });
       gsap.set(tagline, { opacity: 1, y: 0 });
-      // Reduced motion: show every role at once as a static line rather
-      // than cycling — nothing hidden, nothing moving.
-      roleEl.textContent = profile.roles.join(" / ");
-      gsap.set(roleEl, { opacity: 1, y: 0 });
       return undefined;
     }
-
-    let cycleTimeline;
-    // Fade-out current role, swap the text, fade-in the next — the same
-    // fade/stagger vocabulary as the headline/tagline reveal above, just
-    // looping. Started only once the entrance timeline finishes so it never
-    // fights that reveal for control of roleEl's opacity/y.
-    const startRoleCycle = () => {
-      let index = 0;
-      cycleTimeline = gsap.timeline({ repeat: -1 });
-      profile.roles.forEach(() => {
-        cycleTimeline
-          .to(roleEl, { opacity: 0, y: -8, duration: 0.3, ease: "power2.in" })
-          .call(() => {
-            index = (index + 1) % profile.roles.length;
-            roleEl.textContent = profile.roles[index];
-          })
-          .fromTo(roleEl, { y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" })
-          .to({}, { duration: 1.6 }); // hold before the next swap
-      });
-    };
 
     // No artificial delay here — the headline/tagline are the LCP
     // candidate on this page, and hydration itself already costs real time
     // under CPU throttling before this timeline can even start.
-    const tl = gsap.timeline({ onComplete: startRoleCycle });
+    const tl = gsap.timeline();
     tl.fromTo(
       words,
       { opacity: 0, y: 32 },
       { opacity: 1, y: 0, duration: TIMING.base, ease: TIMING.ease, stagger: 0.06 }
-    )
-      .fromTo(
-        tagline,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: TIMING.base, ease: TIMING.ease },
-        // Chained on the same timeline (not a setTimeout) — overlaps the
-        // tail of the headline stagger so the tagline lands ~100ms after it.
-        "-=0.35"
-      )
-      .fromTo(
-        roleEl,
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: TIMING.base, ease: TIMING.ease },
-        "-=0.3"
-      );
+    ).fromTo(
+      tagline,
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: TIMING.base, ease: TIMING.ease },
+      // Chained on the same timeline (not a setTimeout) — overlaps the tail
+      // of the headline stagger so the tagline lands ~100ms after it.
+      "-=0.35"
+    );
 
-    return () => {
-      tl.kill();
-      cycleTimeline?.kill();
-    };
+    return () => tl.kill();
   }, [reducedMotion]);
 
   return (
@@ -129,26 +94,22 @@ export default function Hero() {
     >
       <NodeGraphBackground />
 
-      <div className="relative mx-auto flex w-full max-w-5xl flex-col items-start gap-6 py-32">
+      <div className="relative mx-auto flex w-full max-w-5xl flex-col items-start gap-8 py-32">
         <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 font-mono text-xs uppercase tracking-widest text-accent">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
           {profile.status}
         </span>
 
         <h1
           id="home-heading"
           ref={headlineRef}
-          className="max-w-4xl font-display text-4xl leading-[1.15] tracking-tight text-text sm:text-5xl md:text-6xl"
+          className="font-display leading-[1.05] tracking-tight text-text"
         >
-          <WordLine words={headlineWords} />
+          <WordLine words={nameWords} />
+          <WordLine words={titleWords} className="text-textMuted" />
         </h1>
 
         <p ref={taglineRef} className="max-w-xl text-lg text-textMuted">
-          {profile.tagline}
-        </p>
-
-        <p ref={roleRef} className="font-mono text-sm uppercase tracking-widest text-accent">
-          {profile.roles[0]}
+          {profile.heroHeadline}
         </p>
 
         <div className="flex flex-wrap items-center gap-4 pt-4">

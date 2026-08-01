@@ -4,14 +4,12 @@ export const profile = {
   name: "Suraj Gupta",
   initials: "SG",
   title: "AI Engineer & Full-Stack Developer",
-  status: "Fresher · Open to Work",
-  // Hero's headline (a mission statement) is distinct from `title` — `title`
-  // still powers the Navbar/Footer/metadata's shorter "AI Engineer &
-  // Full-Stack Developer" label, this is just the big Hero-only line.
+  status: "🟢 Available for Full-Time Opportunities",
+  // Hero's supporting mission-statement line, shown below the Name/title
+  // h1 — distinct from `title`, which is the short label used everywhere
+  // else (Navbar/Footer/metadata).
   heroHeadline:
-    "Building AI-powered and scalable software that solves real-world problems through intelligent systems and modern engineering.",
-  tagline: "I build systems that ship — not notebooks.",
-  roles: ["AI Engineer", "Full Stack Developer", "Machine Learning Enthusiast"],
+    "Building production-ready AI applications and scalable full-stack software that solve real-world problems through modern engineering.",
   about: [
     "I'm drawn to problems where intelligence meets engineering — where a model's output has to survive contact with real users, real data, and real edge cases. That's the gap I like working in: turning a research idea into something that actually ships.",
     "I care about clean architecture as much as clever algorithms, because a system nobody can maintain doesn't solve anything for long.",
