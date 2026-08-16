@@ -4,7 +4,6 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BackToTop from "@/components/layout/BackToTop";
 import SmoothScroll from "@/components/layout/SmoothScroll";
-import Loader from "@/components/ui/Loader";
 import Cursor from "@/components/ui/Cursor";
 import { profile } from "@/data/profile";
 import { SITE_URL, SITE_DESCRIPTION } from "@/lib/seo";
@@ -78,7 +77,6 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <div className="grain" aria-hidden="true" />
-        <Loader />
         <Cursor />
         <SmoothScroll />
         <Navbar />
