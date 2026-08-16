@@ -102,8 +102,15 @@ export default function ProjectCaseStudy({ project }) {
           );
         }
 
-        // Tech-stack badges stagger in while that stage is active.
-        tl.to(badges, { autoAlpha: 1, y: 0, stagger: 0.04, duration: 0.3 }, 2.2);
+        // Tech-stack badges stagger in right as that stage finishes settling
+        // (its own crossfade-in ends at tl position 2, i.e. `2 + CROSSFADE_START
+        // - CROSSFADE_DURATION`). `stagger: { amount }` spreads across the
+        // whole group regardless of how many badges a project has, so the
+        // total reveal span stays fixed instead of growing with stack.length
+        // — with a plain per-item stagger, 8 badges pushed the last one past
+        // tl position 2.6, i.e. into the *next* crossfade-out, so it was
+        // still fading in while the whole stage was already fading away.
+        tl.to(badges, { autoAlpha: 1, y: 0, stagger: { amount: 0.15 }, duration: 0.25 }, 2);
 
         scrollTriggerRef.current = tl.scrollTrigger;
         tlDurationRef.current = tl.duration();
