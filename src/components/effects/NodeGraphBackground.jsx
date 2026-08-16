@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -29,48 +29,15 @@ const EDGES = [
 ];
 
 // Self-contained, absolutely-positioned background layer — sits behind
-// whatever section content is rendered on top of it (Hero, NetworkDivider),
+// whatever section content is rendered on top of it (currently just Hero),
 // with no coupling to that markup.
-//
-// `deferUntilVisible`: when true, the draw-in tween and idle-drift listener
-// don't start until this element actually scrolls near the viewport
-// (IntersectionObserver-gated). Hero's above-the-fold usage leaves this
-// false (unchanged, immediate behavior); below-the-fold usages (e.g. the
-// NetworkDivider section) should pass true so this instance's GSAP/SVG work
-// never competes with the critical-path animations during initial load —
-// verified via Lighthouse to measurably affect mobile TBT under CPU
-// throttling otherwise, since Lighthouse's audit never scrolls the page.
-export default function NodeGraphBackground({ deferUntilVisible = false }) {
-  const containerRef = useRef(null);
+export default function NodeGraphBackground() {
   const groupRef = useRef(null);
   const lineRefs = useRef([]);
   const reducedMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(!deferUntilVisible);
-
-  useEffect(() => {
-    if (!deferUntilVisible || isVisible) return undefined;
-    const el = containerRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") {
-      setIsVisible(true);
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [deferUntilVisible, isVisible]);
 
   // Draw-in: animate each edge's stroke-dashoffset from its own length to 0.
   useEffect(() => {
-    if (!isVisible) return undefined;
     const lines = lineRefs.current.filter(Boolean);
 
     if (reducedMotion) {
@@ -95,13 +62,13 @@ export default function NodeGraphBackground({ deferUntilVisible = false }) {
     });
 
     return () => tween.kill();
-  }, [reducedMotion, isVisible]);
+  }, [reducedMotion]);
 
   // Idle drift: a barely-there parallax tied to pointer position, heavily
   // damped via a long quickTo duration so it reads as ambient motion, not a
   // tracked cursor effect.
   useEffect(() => {
-    if (!isVisible || reducedMotion) return undefined;
+    if (reducedMotion) return undefined;
     const group = groupRef.current;
     if (!group) return undefined;
 
@@ -117,60 +84,50 @@ export default function NodeGraphBackground({ deferUntilVisible = false }) {
 
     window.addEventListener("pointermove", handlePointerMove);
     return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, [reducedMotion, isVisible]);
+  }, [reducedMotion]);
 
   return (
-    <div
-      ref={containerRef}
-      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-    >
-      {/* The IntersectionObserver above always watches this wrapper, but a
-          deferred instance skips rendering the SVG markup entirely (not
-          just the animation) until visible — otherwise the below-the-fold
-          copy's 32 SVG nodes still cost a real Style & Layout pass on
-          initial load even though nothing on them is animating yet. */}
-      {isVisible ? (
-        <svg
-          className="h-full w-full"
-          viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-          preserveAspectRatio="xMidYMid slice"
-          aria-hidden="true"
-        >
-          <g ref={groupRef} opacity="0.35">
-            {EDGES.map(([a, b], i) => {
-              const from = NODES[a];
-              const to = NODES[b];
-              const length = Math.hypot(to.x - from.x, to.y - from.y);
-              return (
-                <line
-                  key={`${a}-${b}`}
-                  ref={(el) => {
-                    lineRefs.current[i] = el;
-                  }}
-                  data-length={length}
-                  x1={from.x}
-                  y1={from.y}
-                  x2={to.x}
-                  y2={to.y}
-                  stroke="#FFB020"
-                  strokeWidth="1"
-                  strokeOpacity="0.5"
-                />
-              );
-            })}
-            {NODES.map((node, i) => (
-              <circle
-                key={i}
-                cx={node.x}
-                cy={node.y}
-                r="3"
-                fill="#FFB020"
-                fillOpacity="0.7"
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <svg
+        className="h-full w-full"
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <g ref={groupRef} opacity="0.35">
+          {EDGES.map(([a, b], i) => {
+            const from = NODES[a];
+            const to = NODES[b];
+            const length = Math.hypot(to.x - from.x, to.y - from.y);
+            return (
+              <line
+                key={`${a}-${b}`}
+                ref={(el) => {
+                  lineRefs.current[i] = el;
+                }}
+                data-length={length}
+                x1={from.x}
+                y1={from.y}
+                x2={to.x}
+                y2={to.y}
+                stroke="#FFB020"
+                strokeWidth="1"
+                strokeOpacity="0.5"
               />
-            ))}
-          </g>
-        </svg>
-      ) : null}
+            );
+          })}
+          {NODES.map((node, i) => (
+            <circle
+              key={i}
+              cx={node.x}
+              cy={node.y}
+              r="3"
+              fill="#FFB020"
+              fillOpacity="0.7"
+            />
+          ))}
+        </g>
+      </svg>
     </div>
   );
 }
