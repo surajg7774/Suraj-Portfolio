@@ -22,6 +22,9 @@
 
 # misc
 .DS_Store
+Thumbs.db
+.vscode/
+.idea/
 *.pem
 
 # debug
