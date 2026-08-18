@@ -2,7 +2,6 @@
 // URLs never get hardcoded/duplicated across components.
 export const profile = {
   name: "Suraj Gupta",
-  initials: "SG",
   title: "AI Engineer & Full-Stack Developer",
   status: "🟢 Available for Full-Time Opportunities",
   // Hero's supporting mission-statement line, shown below the Name/title

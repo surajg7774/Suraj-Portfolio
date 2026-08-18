@@ -45,7 +45,7 @@ export default function Navbar() {
           data-cursor="hover"
           className="font-mono text-sm tracking-wider text-text hover:text-accent transition-colors"
         >
-          {profile.initials}
+          {profile.name.split(" ")[0]}
           <span className="text-textMuted">/{profile.name.split(" ")[1]}</span>
         </a>
 
