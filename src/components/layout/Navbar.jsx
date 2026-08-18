@@ -43,10 +43,9 @@ export default function Navbar() {
         <a
           href="#home"
           data-cursor="hover"
-          className="font-mono text-sm tracking-wider text-text hover:text-accent transition-colors"
+          className="font-mono text-sm uppercase tracking-wider text-text hover:text-accent transition-colors"
         >
-          {profile.name.split(" ")[0]}
-          <span className="text-textMuted">/{profile.name.split(" ")[1]}</span>
+          {profile.name}
         </a>
 
         <ul className="hidden md:flex items-center gap-8">
