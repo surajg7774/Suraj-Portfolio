@@ -151,8 +151,7 @@ export default function Hero() {
             <a
               ref={resumeCtaRef}
               href={profile.resumeUrl}
-              target="_blank"
-              rel="noreferrer noopener"
+              download="Suraj_Gupta_CV.pdf"
               data-cursor="hover"
               className="inline-flex items-center gap-2 px-2 py-3 font-mono text-sm text-textMuted transition-colors hover:text-accent"
             >
