@@ -84,7 +84,11 @@ export default function ProjectCard({ project }) {
       className="group flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-bgAlt p-6 text-left transition-colors will-change-transform hover:border-accent/50"
     >
       <div className="flex items-start justify-between gap-4">
-        <h3 className="font-display text-xl text-text">{project.title}</h3>
+        {/* min-w-0 lets the title shrink below its longest word instead of
+            pushing the shrink-0 duration out of the card; break-words wraps
+            a word that still doesn't fit (the global h3 size rule makes
+            these titles larger than text-xl suggests). */}
+        <h3 className="min-w-0 break-words font-display text-xl text-text">{project.title}</h3>
         <span className="shrink-0 font-mono text-xs text-textMuted">{project.duration}</span>
       </div>
 
