@@ -12,12 +12,12 @@ export const skillTracks = [
   {
     id: "frontend",
     label: "Frontend",
-    skills: ["React"],
+    skills: ["React", "TypeScript", "Material UI", "HTML", "CSS"],
   },
   {
     id: "ai-ml",
     label: "AI/ML",
-    skills: ["Machine Learning", "Deep Learning", "NLP", "Computer Vision", "RAG", "LangChain"],
+    skills: ["Machine Learning", "Deep Learning", "NLP", "Computer Vision", "Transformers", "RAG", "LangChain", "LangGraph"],
   },
   {
     id: "databases",
@@ -27,7 +27,7 @@ export const skillTracks = [
   {
     id: "cloud",
     label: "Cloud",
-    skills: ["AWS"],
+    skills: ["Vercel", "Railway", "AWS"],
   },
   {
     id: "dev-tools",
