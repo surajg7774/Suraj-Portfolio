@@ -261,7 +261,12 @@ export default function ProjectCaseStudy({ project }) {
     >
       <div className="mx-auto w-full max-w-5xl px-6 py-10 md:flex-none md:px-12 md:py-12">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h3 className="font-display text-2xl text-text md:text-3xl">{project.title}</h3>
+          <div className="min-w-0">
+            <h3 className="font-display text-2xl text-text md:text-3xl">{project.title}</h3>
+            {project.subtitle && (
+              <p className="mt-1 text-sm text-textMuted">{project.subtitle}</p>
+            )}
+          </div>
           <span className="font-mono text-xs text-textMuted">{project.duration}</span>
         </div>
 

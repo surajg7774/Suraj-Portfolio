@@ -88,7 +88,12 @@ export default function ProjectCard({ project }) {
             pushing the shrink-0 duration out of the card; break-words wraps
             a word that still doesn't fit (the global h3 size rule makes
             these titles larger than text-xl suggests). */}
-        <h3 className="min-w-0 break-words font-display text-xl text-text">{project.title}</h3>
+        <div className="min-w-0">
+          <h3 className="break-words font-display text-xl text-text">{project.title}</h3>
+          {project.subtitle && (
+            <p className="mt-1 break-words text-sm text-textMuted">{project.subtitle}</p>
+          )}
+        </div>
         <span className="shrink-0 font-mono text-xs text-textMuted">{project.duration}</span>
       </div>
 

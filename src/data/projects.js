@@ -46,7 +46,8 @@ export const projects = [
   },
   {
     id: "equipment-diagnosis",
-    title: "Equipment Diagnosis System (ServiceDiagnose AI)",
+    title: "Equipment Diagnosis System",
+    subtitle: "ServiceDiagnose AI",
     duration: "1 month",
     liveUrl: "https://equipment-diagnosis-system.vercel.app/",
     repoUrl: "https://github.com/surajg7774/equipment-diagnosis-system",
