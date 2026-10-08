@@ -106,6 +106,7 @@ export const projects = [
   {
     id: "bharat-fix",
     title: "Bharat Fix",
+    subtitle: "Complaint Management System",
     duration: "1 month",
     stack: ["Java", "Spring Boot", "React", "MySQL", "Spring Security", "JWT", "Google Maps API"],
     problem:
