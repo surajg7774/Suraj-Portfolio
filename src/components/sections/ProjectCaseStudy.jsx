@@ -85,6 +85,15 @@ function stageSettlePosition(index, stageCount, tlDuration) {
   return index + CROSSFADE_START - SETTLE_MARGIN;
 }
 
+// Inverse of the above: which stage owns the scrub position `position`.
+// The hand-off from stage i to i+1 is centered on the crossfade's midpoint,
+// so the active stage flips exactly when the incoming stage becomes the more
+// visible one — and every settle position maps back to its own stage.
+function activeStageIndex(position, stageCount) {
+  const handoff = CROSSFADE_START + CROSSFADE_DURATION / 2;
+  return Math.max(0, Math.min(stageCount - 1, Math.floor(position + 1 - handoff)));
+}
+
 export default function ProjectCaseStudy({ project }) {
   const containerRef = useRef(null);
   const stageRefs = useRef([]);
@@ -109,13 +118,17 @@ export default function ProjectCaseStudy({ project }) {
     scrollTriggerRef.current = null;
 
     const ctx = gsap.context(() => {
+      const badges = stackIndex >= 0 ? stages[stackIndex].querySelectorAll("[data-badge]") : [];
+
       if (reducedMotion) {
         // Fully static: no pin, no reveal-on-scroll, everything visible.
         gsap.set(stages, { autoAlpha: 1, y: 0 });
+        // Badges may still carry the hidden start state from an earlier
+        // normal-motion pass (the reduced-motion flag flips right after
+        // hydration), so strip those inline styles rather than animate.
+        gsap.set(badges, { clearProps: "opacity,visibility,transform" });
         return;
       }
-
-      const badges = stackIndex >= 0 ? stages[stackIndex].querySelectorAll("[data-badge]") : [];
 
       if (isDesktop) {
         gsap.set(stages, { autoAlpha: 0, y: 24 });
@@ -147,7 +160,7 @@ export default function ProjectCaseStudy({ project }) {
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
-              setActiveLabel(Math.min(stages.length - 1, Math.floor(self.progress * stages.length)));
+              setActiveLabel(activeStageIndex(self.progress * tl.duration(), stages.length));
             },
           },
         });
