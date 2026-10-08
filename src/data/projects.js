@@ -45,6 +45,51 @@ export const projects = [
       "A real, live platform running six business lines for an actual agriculture business — not a tutorial project.",
   },
   {
+    id: "equipment-diagnosis",
+    title: "Equipment Diagnosis System (ServiceDiagnose AI)",
+    duration: "1 month",
+    liveUrl: "https://equipment-diagnosis-system.vercel.app/",
+    repoUrl: "https://github.com/surajg7774/equipment-diagnosis-system",
+    role: "Solo project",
+    stack: [
+      "Python",
+      "FastAPI",
+      "Pydantic",
+      "SQLAlchemy",
+      "ChromaDB",
+      "Sentence Embeddings (all-MiniLM-L6-v2, ONNX)",
+      "Groq LLM",
+      "Ollama",
+      "Vision-Language Model",
+      "React",
+      "Vite",
+      "Render",
+      "Vercel",
+    ],
+    problem:
+      "Field technicians diagnosing equipment faults rely on scattered manuals and past experience, which is slow, and a plain-text search cannot reason about a new problem that matches nothing written down.",
+    solution:
+      "A RAG-based diagnosis assistant. A technician describes a fault in plain language (English, Hindi or Hinglish). The system retrieves similar past cases from a vector database and an LLM writes a tailored diagnosis, recommended action and severity. It also handles faults that match nothing in the knowledge base by reasoning from general knowledge, and says so.",
+    architecture:
+      "React frontend on Vercel, FastAPI backend on Render. A text report is embedded and searched in ChromaDB (top similar cases). The LLM sits behind a swappable interface: local Ollama in development, hosted Groq in production. A vision-language model analyzes optional photos, and its findings go into the same LLM call as one combined diagnosis.",
+    features: [
+      "Two separate confidence scores: retrieval similarity vs the LLM's own certainty, so vague reports and unfamiliar faults are visible at a glance.",
+      'Iterative diagnosis: "didn\'t work" returns a different solution each time (earlier failed attempts go into the prompt), up to 4 attempts, then escalates to a human technician.',
+      "Human-in-the-loop learning: user feedback creates provisional fixes, and only a technician review makes a fix verified; failed fixes are stored and steer later answers away from them.",
+      "Text + photo diagnosis, and answers in the user's language (English, Hindi, Hinglish).",
+    ],
+    challenges: [
+      "Free-tier cold start: with the knowledge base grown to 183 records, start-up took roughly 9 minutes on Render's free tier. Precomputed vectors plus build-time model download cut it to about 1 minute (measured).",
+      "Memory: moved embeddings from PyTorch to ONNX (identical vectors, about 210 MB instead of about 750 MB) to fit Render's 512 MB limit.",
+      "Silent retrieval gap: measured that roughly 1 in 8 single-record writes to ChromaDB were stored but missing from search results; fixed by verifying each write with a query and re-writing if needed.",
+      "Language matching: answers came back in the right language 3 of 9 times before prompt changes and 30 of 30 after; English-trained embeddings still cannot match Devanagari reports, so those are never compared against learned fixes.",
+    ],
+    impact:
+      "A deployed end-to-end applied-AI system (retrieval, grounded generation, vision input, feedback loop) backed by a 183-record knowledge base across 19 equipment categories, each record citing a public source page.",
+    limitations:
+      "Advisory only; a diagnosis should be verified by a technician. On the free hosting tier the backend sleeps when idle (first request can take about a minute) and tickets reset on restart. Next: persistent database, user identity and roles for reviewers, and a multilingual embedding model.",
+  },
+  {
     id: "cross-border-compliance",
     title: "Cross-Border Ingredient Safety & Compliance System",
     duration: "1 month",

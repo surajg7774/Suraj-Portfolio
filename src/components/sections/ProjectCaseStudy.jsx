@@ -8,6 +8,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { getLenis } from "@/hooks/useLenis";
 import { TIMING } from "@/lib/constants";
 import Badge from "@/components/ui/Badge";
+import { GithubIcon } from "@/components/icons/BrandIcons";
 
 // The absolute-stacked, pinned-crossfade treatment only applies when we're
 // actually going to pin+scrub (desktop AND motion allowed). `md:absolute`
@@ -39,7 +40,9 @@ const SCROLL_PER_TL_UNIT = 3.2 / 3;
 // Builds the ordered list of stages this project actually has content for.
 // Every project gets Problem/Solution/Tech Stack/Impact; Architecture,
 // Features, and Challenges only appear when the project data includes them,
-// so older, simpler case studies render exactly as before.
+// so older, simpler case studies render exactly as before. An optional
+// `limitations` note rides along under Impact as a secondary text block
+// rather than adding another pinned stage.
 function getStageDefs(project) {
   return [
     { key: "problem", label: "Problem", type: "text", content: project.problem },
@@ -63,7 +66,14 @@ function getStageDefs(project) {
       type: "list",
       content: project.challenges,
     },
-    { key: "impact", label: "Impact", type: "text", content: project.impact, emphasis: true },
+    {
+      key: "impact",
+      label: "Impact",
+      type: "text",
+      content: project.impact,
+      emphasis: true,
+      note: project.limitations,
+    },
   ].filter(Boolean);
 }
 
@@ -242,7 +252,7 @@ export default function ProjectCaseStudy({ project }) {
           <span className="font-mono text-xs text-textMuted">{project.duration}</span>
         </div>
 
-        {(project.role || project.liveUrl) && (
+        {(project.role || project.liveUrl || project.repoUrl) && (
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
             {project.role && (
               <span className="font-mono text-xs uppercase tracking-widest text-textMuted">
@@ -258,6 +268,17 @@ export default function ProjectCaseStudy({ project }) {
                 className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-accent transition-colors hover:bg-accent/20"
               >
                 <ExternalLink size={13} /> View Live Site
+              </a>
+            )}
+            {project.repoUrl && (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-cursor="hover"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-textMuted transition-colors hover:border-accent/40 hover:text-accent"
+              >
+                <GithubIcon size={13} /> GitHub
               </a>
             )}
           </div>
@@ -319,13 +340,23 @@ export default function ProjectCaseStudy({ project }) {
             )}
 
             {stage.type === "text" && (
-              <p
-                className={`max-w-2xl text-lg leading-relaxed ${
-                  stage.emphasis ? "text-text" : "text-textMuted"
-                }`}
-              >
-                {stage.content}
-              </p>
+              <>
+                <p
+                  className={`max-w-2xl text-lg leading-relaxed ${
+                    stage.emphasis ? "text-text" : "text-textMuted"
+                  }`}
+                >
+                  {stage.content}
+                </p>
+                {stage.note && (
+                  <div className="mt-6 max-w-2xl border-t border-white/10 pt-4">
+                    <p className="font-mono text-xs uppercase tracking-widest text-textMuted">
+                      Known limitations &amp; what&apos;s next
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-textMuted">{stage.note}</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         ))}
